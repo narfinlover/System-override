@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM CRITICAL</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        #terminal {
+            width: 80%;
+            max-width: 600px;
+            border: 1px solid #00FF00;
+            padding: 20px;
+            box-shadow: 0 0 15px #00FF00;
+            background-color: rgba(0, 10, 0, 0.9);
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="terminal">
+    <div id="output"></div>
+</div>
+
+<script>
+    const lines = [
+        "Connecting to secure server...",
+        "Bypassing firewall...",
+        "ACCESS GRANTED.",
+        "Downloading personal data...",
+        "Injecting harmless_prank.exe...",
+        "CRITICAL ERROR: System hijacked by Muhammad!",
+        "Just kidding! You've been pranked. 😜"
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    const outputDiv = document.getElementById("output");
+
+    function typeLine() {
+        if (lineIndex < lines.length) {
+            let currentLine = lines[lineIndex];
+            
+            if (charIndex === 0) {
+                let p = document.createElement("p");
+                if (currentLine.includes("ERROR")) {
+                    p.className = "error";
+                }
+                outputDiv.appendChild(p);
+            }
+
+            let paragraphs = outputDiv.getElementsByTagName("p");
+            let currentParagraph = paragraphs[paragraphs.length - 1];
+            
+            currentParagraph.innerHTML += currentLine.charAt(charIndex);
+            charIndex++;
+
+            if (charIndex < currentLine.length) {
+                setTimeout(typeLine, 50);
+            } else {
+                charIndex = 0;
+                lineIndex++;
+                setTimeout(typeLine, 1000); // Wait 1 second before next line
+            }
+        }
+    }
+
+    window.onload = typeLine;
+</script>
+
+</body>
+</html>
